@@ -15,5 +15,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // User-related business logic and operations
+    public User registerUser(User user) {
+        // Perform necessary validations and logic for user registration
+        // For example, check if the username or email is already taken
+
+        // Save the user to the database
+        return userRepository.save(user);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    // Other user-related methods
 }
