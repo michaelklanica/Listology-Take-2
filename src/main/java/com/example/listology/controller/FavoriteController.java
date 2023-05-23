@@ -6,5 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/favorites")
 public class FavoriteController {
+
     // Favorite-related operations
 }

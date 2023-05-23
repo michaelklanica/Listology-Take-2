@@ -1,6 +1,5 @@
 package com.example.listology.service;
 
-import com.example.listology.model.Post;
 import com.example.listology.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
