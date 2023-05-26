@@ -1,8 +1,14 @@
 package com.example.listology.model;
 
-import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -11,30 +17,34 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-
+    @NotBlank
+    @Size(max = 100)
+    @Column(unique = true)
     private String username;
 
+    @NotBlank
+    @Email
+    @Size(max = 100)
+    @Column(unique = true)
+    private String email;
+
+    @NotBlank
+    @Size(max = 255)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Post> posts = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Comment> comments = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "user_favorites",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private Set<Post> favorites = new HashSet<>();
-
-    // Constructors
+    @Size(max = 255)
+    private String bio;
 
     public User() {
+        // Default constructor
     }
 
-    // Getter and Setter methods
+    public User(String username, String email, String password, String bio) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+    }
 
     public Long getId() {
         return id;
@@ -42,14 +52,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
@@ -60,6 +62,14 @@ public class User {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -68,27 +78,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Post> getPosts() {
-        return posts;
+    public String getBio() {
+        return bio;
     }
 
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public Set<Post> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Set<Post> favorites) {
-        this.favorites = favorites;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
