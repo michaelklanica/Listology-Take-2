@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listology - Discover Your Favorites</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Listology</a>
+</nav>
+
+<!-- Hero Section -->
+<section class="jumbotron text-center">
+  <h1 class="display-4">Discover Your Favorites</h1>
+  <p class="lead">A social platform for music, movies, and books enthusiasts</p>
+  <button class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">Register</button>
+  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#loginModal">Log In</button>
+</section>
+
+<!-- Register Modal -->
+<div id="registrationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registrationModalLabel">Registration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="registrationForm">
+          <div class="form-group">
+            <label for="registrationUsername">Username</label>
+            <input type="text" id="registrationUsername" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="registrationEmail">Email</label>
+            <input type="email" id="registrationEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="registrationPassword">Password</label>
+            <input type="password" id="registrationPassword" name="password" required>
+          </div>
+          <div id="registrationMessage" class="alert" style="display: none;"></div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" required>
+          </div>
+          <div id="loginMessage" class="alert" style="display: none;"></div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JavaScript and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your custom JavaScript or additional scripts -->
+<script>
+  $(document).ready(function() {
+    // Handle form submission
+    $('#registrationForm').submit(function (event) {
+      event.preventDefault();
+      var username = $('#registrationUsername').val();
+      var email = $('#registrationEmail').val();
+      var password = $('#registrationPassword').val();
+
+      // Perform AJAX request to register a new user
+      $.ajax({
+        url: '/register',
+        method: 'POST',
+        data: {
+          username: username,
+          email: email,
+          password: password
+        },
+        success: function (response) {
+          // Display registration message
+          $('#registrationMessage').text(response);
+          $('#registrationMessage').removeClass('alert-danger').addClass('alert-success').show();
+        },
+        error: function () {
+          // Display error message if there was an error during the AJAX request
+          $('#registrationMessage').text('An error occurred. Please try again later.');
+          $('#registrationMessage').removeClass('alert-success').addClass('alert-danger').show();
+        }
+      });
+    });
+
+    // Handle form submission
+    $('#loginForm').submit(function (event) {
+      event.preventDefault();
+      var username = $('#loginUsername').val();
+      var password = $('#loginPassword').val();
+
+      // Perform AJAX request to validate login credentials
+      $.ajax({
+        url: '/login',
+        method: 'POST',
+        data: {
+          username: username,
+          password: password
+        },
+        success: function (response) {
+          if (response === 'success') {
+            // Redirect to the main page upon successful login
+            window.location.href = '/main-page';
+          } else {
+            // Display error message if login credentials are incorrect
+            $('#loginMessage').text(response);
+            $('#loginMessage').show();
+          }
+        },
+        error: function () {
+          // Display error message if there was an error during the AJAX request
+          $('#loginMessage').text('An error occurred. Please try again later.');
+          $('#loginMessage').show();
+        }
+      });
+    });
+  });
+
+</script>
+</body>
+</html>

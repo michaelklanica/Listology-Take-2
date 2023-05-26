@@ -1,20 +1,37 @@
 package com.example.listology.controller;
 
-import com.example.listology.repository.UserRepository;
+import com.example.listology.dto.UserDTO;
+import com.example.listology.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/users")
+// Import necessary libraries and annotations
+
+@RestController
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    // Other user-related methods
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
+        // Validate user input (e.g., username uniqueness, password requirements, etc.)
+
+        // Create a new user based on the userDTO
+        UserDTO newUser = new UserDTO();
+        newUser.setUsername(userDTO.getUsername());
+        newUser.setEmail(userDTO.getEmail());
+        newUser.setPassword(userDTO.getPassword());
+
+        // Save the new user to the database using the userService
+        userService.registerUser(newUser);
+
+        // Return a success message
+        return ResponseEntity.ok("User registered successfully");
+    }
 }
