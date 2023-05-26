@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listology - Post</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Listology - Post</h2>
+
+  <!-- Post details -->
+  <h3 th:text="${post.title}"></h3>
+  <p th:text="${post.content}"></p>
+
+  <hr>
+
+  <!-- Comments section -->
+  <h4>Comments:</h4>
+
+  <!-- Display comments -->
+  <div th:if="${comments.empty}">
+    <p>No comments yet.</p>
+  </div>
+  <div th:each="comment : ${comments}">
+    <p th:text="${comment.content}"></p>
+    <p><em>By: <span th:text="${comment.user.username}"></span></em></p>
+    <hr>
+  </div>
+
+  <!-- Comment form -->
+  <h4>Add a Comment:</h4>
+  <form th:action="@{/comments}" method="post">
+    <input type="hidden" name="postId" th:value="${post.id}">
+    <div class="form-group">
+      <textarea class="form-control" name="content" placeholder="Enter your comment"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <hr>
+
+  <!-- Back to main page link -->
+  <a href="/" class="btn btn-secondary">Back to Main Page</a>
+</div>
+</body>
+</html>

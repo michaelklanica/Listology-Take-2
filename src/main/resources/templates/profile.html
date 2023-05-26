@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listology - Profile</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Listology - Profile</h2>
+
+  <!-- User information -->
+  <h3>Welcome, <span th:text="${user.username}"></span>!</h3>
+  <p>Email: <span th:text="${user.email}"></span></p>
+
+  <hr>
+
+  <!-- User's posts -->
+  <h4>Your Posts:</h4>
+
+  <div th:if="${user.posts.empty}">
+    <p>No posts yet.</p>
+  </div>
+  <div th:each="post : ${user.posts}">
+    <h5 th:text="${post.title}"></h5>
+    <p th:text="${post.content}"></p>
+    <hr>
+  </div>
+
+  <!-- User's favorite posts -->
+  <h4>Your Favorite Posts:</h4>
+
+  <div th:if="${user.favoritePosts.empty}">
+    <p>No favorite posts yet.</p>
+  </div>
+  <div th:each="post : ${user.favoritePosts}">
+    <h5 th:text="${post.title}"></h5>
+    <p th:text="${post.content}"></p>
+    <hr>
+  </div>
+
+  <!-- Change password link -->
+  <a href="/profile/password" class="btn btn-primary">Change Password</a>
+
+  <hr>
+
+  <!-- Logout link -->
+  <a href="/logout" class="btn btn-secondary">Logout</a>
+</div>
+</body>
+</html>
