@@ -9,21 +9,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 
 @Controller
 public class LandingController {
     @Autowired
     private UserService userService;
+
     @GetMapping("/")
     public String showLandingPage() {
         return "landing";
     }
 
     @GetMapping("/main")
-    public String showMainPage() {
-        // Logic to retrieve data and prepare the main page
-        return "main"; // Return the name of the main page template (e.g., "main.html")
+    public String showMainPage(Model model, HttpSession session) {
+        // Retrieve the logged-in user's information from the session
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        // Pass the user's information to the template
+        model.addAttribute("user", loggedInUser);
+
+        return "main";
     }
+
 
     @PostMapping("/login")
     public String processLogin(User user, HttpSession session, Model model) {

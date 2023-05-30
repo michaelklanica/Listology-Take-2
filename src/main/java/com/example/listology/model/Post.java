@@ -2,6 +2,8 @@ package com.example.listology.model;
 
 import com.example.listology.util.Category;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +20,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)

@@ -36,5 +36,9 @@ public class UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
+    public User getUserById(Long userId) {
+        // Implementation to fetch user by ID from the database
+        // Replace this with your actual implementation
+        return userRepository.findById(userId).orElse(null);
+    }
 }
