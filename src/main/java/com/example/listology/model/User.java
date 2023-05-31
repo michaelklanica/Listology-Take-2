@@ -32,18 +32,15 @@ public class User {
     @Size(max = 255)
     private String password;
 
-    @Size(max = 255)
-    private String bio;
-
     public User() {
         // Default constructor
     }
 
-    public User(String username, String email, String password, String bio) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.bio = bio;
+    public User(User copy) {
+        id = copy.id;
+        username = copy.username;
+        email = copy.email;
+        password = copy.password;
     }
 
     public Long getId() {
@@ -78,11 +75,4 @@ public class User {
         this.password = password;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 }
