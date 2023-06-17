@@ -6,12 +6,12 @@ import com.example.listology.repository.PostRepository;
 import com.example.listology.repository.UserRepository;
 import com.example.listology.util.Category;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -37,6 +37,7 @@ public class PostController {
     @GetMapping("/posts/create")
     public String showNewPostForm(Model model){
         model.addAttribute("post", new Post());
+        System.out.println("showNewPostForm method");
         return "posts/create";
     }
 
@@ -49,6 +50,11 @@ public class PostController {
             @RequestParam(name = "createdAt") LocalDateTime createdAt,
             Authentication authentication
     ) {
+        System.out.println(authentication);
+        System.out.println(title);
+        System.out.println(content);
+        System.out.println(createdAt);
+        System.out.println(author);
         if (authentication != null && authentication.isAuthenticated()) {
             // User is authenticated, proceed with creating the post
             Post post = new Post();
